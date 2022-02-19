@@ -10,9 +10,12 @@ mkdir /home/vagrant/.kube
 cp /etc/kubernetes/admin.conf /home/vagrant/.kube/config
 chown -R vagrant:vagrant /home/vagrant/.kube
 
-# Deploy flannel network
+# Deploy calico network
+# https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
 echo "[TASK 3] Deploy Calico network"
-su - vagrant -c "kubectl create -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml"
+su - vagrant -c "kubectl create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml"
+su - vagrant -c "kubectl create -f https://projectcalico.docs.tigera.io/manifests/custom-resources.yaml"
+su - vagrant -c "kubectl taint nodes --all node-role.kubernetes.io/master-"
 
 # Generate Cluster join command
 echo "[TASK 4] Generate and save cluster join command to /joincluster.sh"
