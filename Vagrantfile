@@ -5,35 +5,35 @@ ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
 Vagrant.configure(2) do |config|
 
-  config.vm.provision "shell", path: "bootstrap.sh"
+  #config.vm.provision "shell", path: "bootstrap.sh"
 
   # Kubernetes Master Server
-  config.vm.define "kmaster" do |kmaster|
-    kmaster.vm.box = "bento/ubuntu-18.04"
-    kmaster.vm.hostname = "kmaster.example.com"
-    kmaster.vm.network "private_network", ip: "172.42.42.100"
-    kmaster.vm.provider "virtualbox" do |v|
-      v.name = "kmaster"
+  config.vm.define "master" do |master|
+    master.vm.box = "mpasternak/focal64-arm"
+    master.vm.hostname = "master.k8s.gonza.cc"
+    master.vm.network "private_network", ip: "172.20.10.100"
+    master.vm.provider "virtualbox" do |v|
+      v.name = "master"
       v.memory = 2048
       v.cpus = 2
     end
-    kmaster.vm.provision "shell", path: "bootstrap_kmaster.sh"
+    #master.vm.provision "shell", path: "bootstrap_master.sh"
   end
 
   NodeCount = 2
 
   # Kubernetes Worker Nodes
   (1..NodeCount).each do |i|
-    config.vm.define "kworker#{i}" do |workernode|
-      workernode.vm.box = "bento/ubuntu-18.04"
-      workernode.vm.hostname = "kworker#{i}.example.com"
-      workernode.vm.network "private_network", ip: "172.42.42.10#{i}"
-      workernode.vm.provider "virtualbox" do |v|
-        v.name = "kworker#{i}"
-        v.memory = 2048 
+    config.vm.define "worker#{i}" do |worker|
+      worker.vm.box = "mpasternak/focal64-arm"
+      worker.vm.hostname = "worker#{i}.k8s.gonza.cc"
+      worker.vm.network "private_network", ip: "172.20.10.10#{i}"
+      worker.vm.provider "virtualbox" do |v|
+        v.name = "worker#{i}"
+        v.memory = 2048
         v.cpus = 2
       end
-      workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
+      #worker.vm.provision "shell", path: "bootstrap_worker.sh"
     end
   end
 

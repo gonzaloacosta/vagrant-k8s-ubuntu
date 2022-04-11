@@ -1,0 +1,10 @@
+[masters]
+master     ansible_host=172.20.10.100
+
+[workers]
+worker1    ansible_host=172.20.10.101
+worker2    ansible_host=172.20.10.102
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=vagrant

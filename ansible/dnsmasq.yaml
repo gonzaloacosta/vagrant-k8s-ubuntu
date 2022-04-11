@@ -1,0 +1,7 @@
+---
+- name: Installing dnsmasq
+  hosts: manager
+
+  roles: 
+    - role: dnsmasq
+
