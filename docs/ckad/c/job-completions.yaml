@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-parallelims
+spec:
+  completions: 5
+  parallelism: 5
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - echo hello;sleep 10;echo world
+        image: busybox
+        name: job-parallelims
+        resources: {}
+      restartPolicy: Never
+status: {}

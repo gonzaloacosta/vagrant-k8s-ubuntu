@@ -1,0 +1,18 @@
+loki:
+  enabled: true
+  persistence:
+    enable: true
+    storageClassName: nfs-provisioner
+    size: 1Gi
+
+promtail:
+  enabled: true
+
+grafana:
+  enabled: true
+  sidecar:
+    datasources:
+      enabled: true
+      maxLines: 1000
+  image:
+    tag: 8.3.5
